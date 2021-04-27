@@ -36,7 +36,9 @@ for i in range(1, len(rows) + 1):
         'estado': estado
     })
 
-
+# filtrando a region metropolitana
+rm = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[6]/div/div[2]/div/table/tbody/tr[13]/td[2]/a")
+rm.click()
 
     
 
