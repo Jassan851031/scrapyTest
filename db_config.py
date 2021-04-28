@@ -1,16 +1,13 @@
 from pymongo import MongoClient
 
-URL = "mongodb://localhost:8080"
-USER = "dmin"
-PASS = "admin1234"
+# URL = "mongodb://localhost:8080"
+# USER = "admin"
+# PASS = "admin1234"
 
-client = MongoClient("mongodb+srv://admin:admin1234@myCluster.kqvdy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-db = client.comunas_info
-collection = db.comunas_fases
+def insertData(arr) {
 
-
-test = {
-    "nombre": "Raul"
+    client = MongoClient("mongodb+srv://admin:admin1234@myCluster.kqvdy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+    db = client.comunas_info
+    collection = db.comunas_fases
+    collection.insert_many(arr)
 }
-
-collection.insert_one(test)

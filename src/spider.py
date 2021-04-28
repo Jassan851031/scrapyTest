@@ -5,8 +5,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 import time
+from pymongo import MongoClient
+
+
 
 url = 'https://www.enquefase.cl/'
+
+def insertData(arr) :
+    client = MongoClient("mongodb+srv://admin:admin1234@myCluster.kqvdy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+    db = client.comunas_info
+    collection = db.comunas_fases
+    collection.insert_many(arr)
+
 
 # abriendo el browser
 driver = webdriver.Chrome(executable_path="/home/jorge/Documentos/interviews/testScrapy/src/chromedriver_binary")
@@ -36,6 +46,8 @@ for i in range(1, len(rows) + 1):
         'estado': estado
     })
 
+insertData(comunaData)
+
 # filtrando a region metropolitana
 rm = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[6]/div/div[2]/div/table/tbody/tr[13]/td[2]/a")
 rm.click()
@@ -48,11 +60,11 @@ quili.click()
 detalleQuili = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[3]/div/div/a[1]")
 detalleQuili.click()
 
+#accediendo a permisos para viajar desde quilicura a pichilemu
+permisoPichilemu = driver.find_element_by_id('select2-single-select-target-result-e8au-Pichilemu')
+permisoPichilemu.click()
 
-    
 
-#//*[@id="main-wrapper"]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[1]
-#/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[2]
 
-#/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[1]/td[1]
+
 
