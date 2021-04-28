@@ -10,7 +10,7 @@ url = 'https://www.enquefase.cl/'
 
 # abriendo el browser
 driver = webdriver.Chrome(executable_path="/home/jorge/Documentos/interviews/testScrapy/src/chromedriver_binary")
-driver.implicitly_wait(10)
+driver.implicitly_wait(5)
 #obteniendo url
 driver.get(url)
 
@@ -39,6 +39,15 @@ for i in range(1, len(rows) + 1):
 # filtrando a region metropolitana
 rm = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[6]/div/div[2]/div/table/tbody/tr[13]/td[2]/a")
 rm.click()
+
+#accediendo a la comuna Quilicura
+quili = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[1]/div/div/div[2]/div/table/tbody/tr[39]/td[1]/a")
+quili.click()
+
+#accediendo al detalle quilicura
+detalleQuili = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[3]/div/div/a[1]")
+detalleQuili.click()
+
 
     
 
