@@ -10,3 +10,4 @@ def insertData(arr):
     db = client.comunas_info
     collection = db.comunas_fases
     collection.insert_many(arr)
+
