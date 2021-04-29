@@ -11,7 +11,7 @@ from db_config import insertData
 
 url = 'https://www.enquefase.cl/'
 
-def getCookees():
+def getCookies():
     driver = webdriver.Chrome()
     driver.get(url)
     cookies_list = driver.get_cookies()
@@ -26,7 +26,7 @@ driver = webdriver.Chrome(executable_path="/home/jorge/Documentos/interviews/tes
 driver.implicitly_wait(5)
 #obteniendo url
 driver.get(url)
-getCookees()
+getCookies()
 
 # abriendo menu Listado de la izquierda
 listado = driver.find_element_by_xpath("/html/body/div[3]/div[3]/div/ul/li[3]/a")
@@ -37,22 +37,22 @@ if driver.current_url.find('#google_vignette') != -1:
     driver.back()
     listado.click()
 url = 'https://www.enquefase.cl/listado-de-comunas'
-getCookees()
+getCookies()
 
 # obtendiendo informacion de comunas y sus estados
 rows = driver.find_elements_by_xpath('/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr')
 comunaData = []
-# for i in range(1, len(rows) + 1):
-#     comuna = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[1]").text
-#     fase = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[2]").text
-#     estado = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[3]").text
-#     comunaData.append({
-#         'comuna': comuna,
-#         'fase': fase,
-#         'estado': estado
-#     })
+for i in range(1, len(rows) + 1):
+    comuna = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[1]").text
+    fase = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[2]").text
+    estado = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[3]").text
+    comunaData.append({
+        'comuna': comuna,
+        'fase': fase,
+        'estado': estado
+    })
 
-#insertData(comunaData)
+insertData(comunaData)
 
 # filtrando a region metropolitana
 rm = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[6]/div/div[2]/div/table/tbody/tr[13]/td[2]/a")
@@ -63,26 +63,26 @@ if driver.current_url.find('#google_vignette') != -1:
     driver.back()
     rm.click()
 url = 'https://www.enquefase.cl/region/metropolitana-de-santiago'
-getCookees()
+getCookies()
 
 #accediendo a la comuna Quilicura
 quili = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[1]/div/div/div[2]/div/table/tbody/tr[39]/td[1]/a")
 quili.click()
 url = 'https://www.enquefase.cl/quilicura'
-getCookees()
+getCookies()
 
 #accediendo al detalle quilicura
 detalleQuili = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[3]/div/div/a[1]")
 detalleQuili.click()
 url = 'https://www.enquefase.cl/calculadora-de-permisos-para-viajar-desde/quilicura'
-getCookees()
+getCookies()
 
 #accediendo a permisos para viajar desde quilicura a pichilemu
 selectorComuna = driver.find_element_by_id('select2-single-select-target-container').click()
 permisoPichilemu = driver.find_element_by_xpath('/html/body/span/span/span[2]/ul/li[221]')
 permisoPichilemu.click()
 url = 'https://www.enquefase.cl/calculadora-de-permisos-para-viajar-de/quilicura/a/pichilemu'
-getCookees()
+getCookies()
 
 driver.close()
 
