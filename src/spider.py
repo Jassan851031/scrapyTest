@@ -4,18 +4,18 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
+from selenium import webdriver
 import time
-from pymongo import MongoClient
-
+from db_config import insertData
 
 
 url = 'https://www.enquefase.cl/'
 
-def insertData(arr) :
-    client = MongoClient("mongodb+srv://admin:admin1234@myCluster.kqvdy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
-    db = client.comunas_info
-    collection = db.comunas_fases
-    collection.insert_many(arr)
+# def insertData(arr) :
+#     client = MongoClient("mongodb+srv://admin:admin1234@myCluster.kqvdy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+#     db = client.comunas_info
+#     collection = db.comunas_fases
+#     collection.insert_many(arr)
 
 
 # abriendo el browser
@@ -36,21 +36,26 @@ if driver.current_url.find('#google_vignette') != -1:
 # obtendiendo informacion de comunas y sus estados
 rows = driver.find_elements_by_xpath('/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr')
 comunaData = []
-for i in range(1, len(rows) + 1):
-    comuna = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[1]").text
-    fase = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[2]").text
-    estado = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[3]").text
-    comunaData.append({
-        'comuna': comuna,
-        'fase': fase,
-        'estado': estado
-    })
+# for i in range(1, len(rows) + 1):
+#     comuna = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[1]").text
+#     fase = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[2]").text
+#     estado = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[30]/div/div/div/table/tbody/tr[" + str(i) + "]/td[3]").text
+#     comunaData.append({
+#         'comuna': comuna,
+#         'fase': fase,
+#         'estado': estado
+#     })
 
-insertData(comunaData)
+#insertData(comunaData)
 
 # filtrando a region metropolitana
 rm = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[6]/div/div[2]/div/table/tbody/tr[13]/td[2]/a")
 rm.click()
+
+#validando existencia de Google Adds
+if driver.current_url.find('#google_vignette') != -1:
+    driver.back()
+    rm.click()
 
 #accediendo a la comuna Quilicura
 quili = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[2]/div[1]/div/div/div[2]/div/table/tbody/tr[39]/td[1]/a")
@@ -61,10 +66,11 @@ detalleQuili = driver.find_element_by_xpath("/html/body/div[3]/div[4]/div/div[3]
 detalleQuili.click()
 
 #accediendo a permisos para viajar desde quilicura a pichilemu
-permisoPichilemu = driver.find_element_by_id('select2-single-select-target-result-e8au-Pichilemu')
+selectorComuna = driver.find_element_by_id('select2-single-select-target-container').click()
+permisoPichilemu = driver.find_element_by_xpath('/html/body/span/span/span[2]/ul/li[221]')
 permisoPichilemu.click()
 
-
+driver.close()
 
 
 
