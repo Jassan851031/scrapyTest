@@ -84,6 +84,7 @@ permisoPichilemu.click()
 url = 'https://www.enquefase.cl/calculadora-de-permisos-para-viajar-de/quilicura/a/pichilemu'
 getCookies()
 
+#cerrando el spider
 driver.close()
 
 
